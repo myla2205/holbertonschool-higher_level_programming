@@ -10,24 +10,24 @@ Usage
 ::
 
     >>> say_my_name = __import__('3-say_my_name').say_my_name
-    >>> say_my_name("Gabriel", "Rivera")
-    My name is Gabriel Rivera
+    >>> say_my_name("Kamyl", "Jimenez")
+    My name is Kamyl Jimenez
 
 ::
 
-    >>> say_my_name("Gabriel")
-    My name is Gabriel
+    >>> say_my_name("Kamyl")
+    My name is Kamyl
 
 
 ::
 
-    >>> say_my_name(6, "Gabriel")
+    >>> say_my_name(6, "Kamyl")
     Traceback (most recent call last):
     TypeError: first_name must be a string
 
 ::
 
-    >>> say_my_name("Gabriel", ["Anime", "Volleyball", "Cars"])
+    >>> say_my_name("Kamyl", ["music", "restaurants", "perfumes"])
     Traceback (most recent call last):
     TypeError: last_name must be a string
 
