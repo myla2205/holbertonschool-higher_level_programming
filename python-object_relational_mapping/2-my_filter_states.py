@@ -1,30 +1,42 @@
 #!/usr/bin/python3
-
 """
-Script that takes in an argument and displays all values
-in the states table of the database where name matches the argument.
+Script that takes in an argument and displays all values in the states table
+where name matches the argument (case-sensitive).
 """
-
-import MySQLdb
 import sys
+import MySQLdb
 
 if __name__ == "__main__":
+    # Get MySQL credentials and search term from command-line arguments
+    mysql_username = sys.argv[1]
+    mysql_password = sys.argv[2]
+    database_name = sys.argv[3]
+    state_name = sys.argv[4]
 
+    # Connect to the MySQL database
     db = MySQLdb.connect(
         host="localhost",
         port=3306,
-        user=sys.argv[1],
-        passwd=sys.argv[2],
-        db=sys.argv[3]
-        )
+        user=mysql_username,
+        passwd=mysql_password,
+        db=database_name
+    )
 
-    cur = db.cursor()
-    cur.execute("""SELECT * FROM states WHERE name
-                LIKE BINARY '{}' ORDER BY id ASC""".format(sys.argv[4]))
+    # Create a cursor object to execute queries
+    cursor = db.cursor()
 
-    rows = cur.fetchall()
-    for row in rows:
+    # Use BINARY to enforce case-sensitive search
+    query = (
+        "SELECT * FROM states "
+        "WHERE BINARY name = '{}' "
+        "ORDER BY id ASC".format(state_name)
+    )
+    cursor.execute(query)
+
+    # Fetch and print all results
+    for row in cursor.fetchall():
         print(row)
 
-    cur.close()
+    # Close the cursor and connection
+    cursor.close()
     db.close()
